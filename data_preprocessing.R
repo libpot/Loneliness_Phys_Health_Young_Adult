@@ -13,7 +13,7 @@ library(tidyverse) # data manipulation
 library(haven) # loading SPSS dataset
 
 # loading data
-NorPD_UiO_agg_orig <- read_sav("N:/durable/Data_analyses/Libor/Chronic_Loneliness_Health_Adulthood/Data/NorPD_UiO_disaggregated_300316.sav")
+NorPD_UiO_agg_orig <- read_sav("disaggregated_300316.sav")
 
 
 
@@ -366,7 +366,7 @@ NorPD_antidep_washout <- NorPD_tidy %>%
             time  = min(time, na.rm = T)) %>% 
   ungroup() %>% 
   filter(event == 1)
-write.csv(NorPD_antidep_washout, "N:/durable/Data_analyses/Libor/Chronic_Loneliness_Health_Adulthood/Data/NorPD_antidep_washout")
+write.csv(NorPD_antidep_washout, "antidep_washout")
 
 
 ### MERGING SURVEY AND REGISTER DATA ###
@@ -385,7 +385,7 @@ NorPD_meds <- left_join(NorPD_UiO_agg[,"id"], NorPD_chronic_outcomes, by = "id")
                 ~ ifelse(is.na(.x), 9.33, .x))) %>%  #  9.33 is the length of the follow-up period in years
   left_join(., NorPD_acute_outcomes, by = "id")   
   
-write.csv(NorPD_UiN_analysis, "N:/durable/Data_analyses/Libor/Chronic_Loneliness_Health_Adulthood/Data/NorPD_UiN_analysis")
+write.csv(NorPD_UiN_analysis, "UiN_analysis")
 
 
 
@@ -457,7 +457,7 @@ chronic_cond <- data.frame(condition = atc_chronic,
   mutate(condition = case_when(condition == "C01|^C02|^C03|^C07|^C08|^C09|^C10" ~ "Cx",
                                condition == "A07A|^A07E" ~ "A07x",
                                TRUE ~ condition))
-write.csv(chronic_cond, "N:/durable/Data_analyses/Libor/Chronic_Loneliness_Health_Adulthood/Results/Tables/descriptives_chronic_cond")
+write.csv(chronic_cond, "descriptives_chronic_cond")
 
   
   
@@ -505,7 +505,7 @@ sample_characteristics <- rbind(sample_characteristics_cat, sample_characteristi
                                         "loneliness_1"), ordered = TRUE)) %>% 
   arrange(name) %>% 
   select(-median) 
-write.csv(sample_characteristics, "N:/durable/Data_analyses/Libor/Chronic_Loneliness_Health_Adulthood/Results/Tables/sample_characteristics")
+write.csv(sample_characteristics, "sample_characteristics")
 
 
 
@@ -528,7 +528,7 @@ missing_proportions_table <- missing_proportions_long %>%
   separate(variable, into = c("name", "wave"), sep = "_(?=\\d+$)") %>% 
   pivot_wider(names_from = "wave",
               values_from = "value") 
-write.csv(missing_proportions_table, "N:/durable/Data_analyses/Libor/Chronic_Loneliness_Health_Adulthood/Results/Tables/missing_props")
+write.csv(missing_proportions_table, "missing_props")
 
 
 missing_proportions_long %>% 
@@ -576,7 +576,7 @@ NorPD_UiN_analysis_imp <- complete(Imp1, action = "long", include = FALSE) %>%
   left_join(., NorPD_meds, by = "id") 
   
 # saving data: long-format
-write.csv(NorPD_UiN_analysis_imp, "N:/durable/Data_analyses/Libor/Chronic_Loneliness_Health_Adulthood/Data/NorPD_UiN_analysis_imp")
+write.csv(NorPD_UiN_analysis_imp, "UiN_analysis_imp")
 
 
 
