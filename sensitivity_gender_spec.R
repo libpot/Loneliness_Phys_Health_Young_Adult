@@ -13,8 +13,8 @@ library(marginaleffects) # computing marginal contrasts
 
 
 # loading data
-NorPD_UiN_analysis <- read_csv("N:/durable/Data_analyses/Libor/Chronic_Loneliness_Health_Adulthood/Data/NorPD_UiN_analysis")
-NorPD_UiN_analysis_imp <- read_csv("N:/durable/Data_analyses/Libor/Chronic_Loneliness_Health_Adulthood/Data/NorPD_UiN_analysis_imp")
+NorPD_UiN_analysis <- read_csv("/Data/NorPD_UiN_analysis")
+NorPD_UiN_analysis_imp <- read_csv("/Data/NorPD_UiN_analysis_imp")
 
 # pre-processing
 NorPD_UiN_analysis_imp <- NorPD_UiN_analysis_imp %>% 
@@ -90,7 +90,7 @@ table_nonadj_results_acute_gender <- nonadj_results_acute_gender %>%
               values_from = "estimate") %>% 
   select(measure, outcome, male, female, interaction)  
   
-write.csv(table_nonadj_results_acute_gender, "N:/durable/Data_analyses/Libor/Chronic_Loneliness_Health_Adulthood/Results/Tables/table_nonadj_results_acute_gender")
+write.csv(table_nonadj_results_acute_gender, "/Results/Tables/table_nonadj_results_acute_gender")
 
 
 
@@ -164,7 +164,7 @@ table_chronic_gender <- nonadj_results_chronic_gender %>%
               values_from = "estimate") %>% 
   select(measure, outcome, lonely_measure, male, female, interaction)
 
-write.csv(table_chronic_gender, "N:/durable/Data_analyses/Libor/Chronic_Loneliness_Health_Adulthood/Results/Tables/table_chronic_gender")
+write.csv(table_chronic_gender, "/Results/Tables/table_chronic_gender")
 
 
 
