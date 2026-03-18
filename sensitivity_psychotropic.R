@@ -4,10 +4,10 @@
 
 
 # loading data
-NorPD_UiN_analysis <- read_csv("N:/durable/Data_analyses/Libor/Chronic_Loneliness_Health_Adulthood/Data/NorPD_UiN_analysis")
-NorPD_UiN_analysis_imp <- read_csv("N:/durable/Data_analyses/Libor/Chronic_Loneliness_Health_Adulthood/Data/NorPD_UiN_analysis_imp")
-NorPD_antidep_washout <- read_csv("N:/durable/Data_analyses/Libor/Chronic_Loneliness_Health_Adulthood/Data/NorPD_antidep_washout")
-NorPD_nonresp_weights <- read_csv("N:/durable/Data_analyses/Libor/Chronic_Loneliness_Health_Adulthood/Data/NorPD_nonresp_weights") %>% 
+NorPD_UiN_analysis <- read_csv("/Data/NorPD_UiN_analysis")
+NorPD_UiN_analysis_imp <- read_csv("/Data/NorPD_UiN_analysis_imp")
+NorPD_antidep_washout <- read_csv("/Data/NorPD_antidep_washout")
+NorPD_nonresp_weights <- read_csv("/Data/NorPD_nonresp_weights") %>% 
   mutate(id = norpd_id, nonresp_weights = weights) %>% select(id, nonresp_weights)
 
 library(contsurvplot)
@@ -158,7 +158,7 @@ plot_combined_antidepress <- results_combined_antidepressants %>%
         axis.line = element_line(color = "black"))
 
 ggsave(filename = "plot_combined_antidepress.jpeg",
-       path = "N:/durable/Data_analyses/Libor/Chronic_Loneliness_Health_Adulthood/Results/Graphs", 
+       path = "/Results/Graphs", 
        width = 13.8, 
        height = 5,  
        bg="white",
@@ -176,7 +176,7 @@ results_combined_antidepressants <- results_combined_antidepressants %>%
               values_from = c("unadjusted", `IPTW-MSM`)) %>% 
   arrange(desc(outcome), effect) %>% 
   select(outcome, effect, ends_with(c("direct", "indirect")))
-write.csv(results_combined_antidepressants, "N:/durable/Data_analyses/Libor/Chronic_Loneliness_Health_Adulthood/Results/Tables/results_combined_antidepressants")
+write.csv(results_combined_antidepressants, "/Results/Tables/results_combined_antidepressants")
 
 
 
@@ -277,7 +277,7 @@ combined_surv_curves <- plot_grid(surv_curve_direct, surv_curve_indirect,
              size = 16, fontfamily = "Times")
 
 ggsave(filename = "combined_surv_curves.jpeg",
-       path = "N:/durable/Data_analyses/Libor/Chronic_Loneliness_Health_Adulthood/Results/Graphs", 
+       path = "/Results/Graphs", 
        width = 18, 
        height = 10,  
        bg="white",
@@ -288,7 +288,7 @@ combined_antidep_MSM_surv_curves <- plot_grid(plot_combined_antidepress, NULL, c
                                               rel_heights = c(1, 0.1, 1.5))
 
 ggsave(filename = "combined_antidep_MSM_surv_curves .jpeg",
-       path = "N:/durable/Data_analyses/Libor/Chronic_Loneliness_Health_Adulthood/Results/Graphs", 
+       path = "/Results/Graphs", 
        width = 15, 
        height = 15,  
        bg="white",
