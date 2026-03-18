@@ -18,9 +18,9 @@ library(marginaleffects) # computing marginal contrasts
 
 
 # loading data
-NorPD_UiN_analysis <- read_csv("N:/durable/Data_analyses/Libor/Chronic_Loneliness_Health_Adulthood/Data/NorPD_UiN_analysis")
-NorPD_UiN_analysis_imp <- read_csv("N:/durable/Data_analyses/Libor/Chronic_Loneliness_Health_Adulthood/Data/NorPD_UiN_analysis_imp")
-NorPD_nonresp_weights <- read_csv("N:/durable/Data_analyses/Libor/Chronic_Loneliness_Health_Adulthood/Data/NorPD_nonresp_weights") %>% 
+NorPD_UiN_analysis <- read_csv("NorPD_UiN_analysis")
+NorPD_UiN_analysis_imp <- read_csv("NorPD_UiN_analysis_imp")
+NorPD_nonresp_weights <- read_csv("NorPD_nonresp_weights") %>% 
   mutate(id = norpd_id, nonresp_weights = weights) %>% select(id, nonresp_weights)
 
 
@@ -96,7 +96,7 @@ nonadj_results_acute <- select(nonadj_models_acute, starts_with("avg_comp")) %>%
                          ~ summary(mice::pool(.x$contrasts), conf.int = TRUE))) %>% # pooling according to Rubin's rules
   select(contrasts) %>% unnest() %>% 
   select(measure, outcome, estimate, `2.5 %`, `97.5 %`)
-write.csv(nonadj_results_acute, "N:/durable/Data_analyses/Libor/Chronic_Loneliness_Health_Adulthood/Results/Tables/raw_nonadj_results_acute")
+write.csv(nonadj_results_acute, "raw_nonadj_results_acute")
 
 
 # risk of prescriptions for chronic physical health-related conditions: cardiovascular, metabolic, gastrointestinal, autoimmune and migraine 
@@ -147,7 +147,7 @@ nonadj_results_chronic <- select(nonadj_models_chronic, starts_with("avg_comp"))
                          ~ summary(mice::pool(.x$contrasts), conf.int = TRUE))) %>% # pooling according to Rubin's rules
   select(contrasts) %>% unnest() %>% 
   select(measure, outcome, estimate, `2.5 %`, `97.5 %`)
-write.csv(nonadj_results_chronic, "N:/durable/Data_analyses/Libor/Chronic_Loneliness_Health_Adulthood/Results/Tables/raw_nonadj_results_chronic")
+write.csv(nonadj_results_chronic, "raw_nonadj_results_chronic")
   
 
 
@@ -259,7 +259,7 @@ summary(weighted_dataset$weighted_data_trim[[2]]$weights) # no extreme weights (
 
 
 weighted_data_analysis <- select(weighted_dataset, .imp, measure, weighted_data, weighted_data_trim, t1_weighted_data:t3_weighted_data, t1_weighted_data_trim:t3_weighted_data_trim)
-save(weighted_data_analysis, file = "N:/durable/Data_analyses/Libor/Chronic_Loneliness_Health_Adulthood/Results/weighted_data_analysis.RData")
+save(weighted_data_analysis, file = "weighted_data_analysis.RData")
 
 
 
@@ -325,7 +325,7 @@ MSM_chronic_results <- select(MSM_chronic_models, starts_with("avg_comp")) %>%
                          ~ summary(mice::pool(.x$contrasts), conf.int = TRUE))) %>% # pooling according to Rubin's rules
   select(contrasts) %>% unnest() %>% 
   select(measure, outcome, estimate, `2.5 %`, `97.5 %`)
-write.csv(MSM_chronic_results, "N:/durable/Data_analyses/Libor/Chronic_Loneliness_Health_Adulthood/Results/Tables/raw_MSM_chronic_results")
+write.csv(MSM_chronic_results, "raw_MSM_chronic_results")
 
 # analgesics and antibiotics use: number of prescriptions and defined daily doses (DDD)
 MSM_acute_models <- unnest(weighted_dataset, data) %>% 
@@ -375,7 +375,7 @@ MSM_acute_results <- select(MSM_acute_models, starts_with("avg_comp")) %>%
                          ~ summary(mice::pool(.x$contrasts), conf.int = TRUE))) %>% # pooling according to Rubin's rules
   select(contrasts) %>% unnest() %>% 
   select(measure, outcome, estimate, `2.5 %`, `97.5 %`)
-write.csv(MSM_acute_results, "N:/durable/Data_analyses/Libor/Chronic_Loneliness_Health_Adulthood/Results/Tables/raw_MSM_acute_results")
+write.csv(MSM_acute_results, "raw_MSM_acute_results")
 
 
 
@@ -438,7 +438,7 @@ plot_combined_chronic <- combined_results_chronic %>%
         axis.line = element_line(color = "black"))
 
 ggsave(filename = "plot_combined_chronic.jpeg",
-       path = "N:/durable/Data_analyses/Libor/Chronic_Loneliness_Health_Adulthood/Results/Graphs", 
+       path = "Results/Graphs", 
        width = 13.5, 
        height = 8,  
        bg="white",
@@ -469,7 +469,7 @@ plot_combined_chronic_timespec <- combined_results_chronic %>%
         axis.line = element_line(color = "black"))
 
 ggsave(filename = "plot_combined_chronic_timespec.jpeg",
-       path = "N:/durable/Data_analyses/Libor/Chronic_Loneliness_Health_Adulthood/Results/Graphs", 
+       path = "Results/Graphs", 
        width = 13.5, 
        height = 8,  
        bg="white",
@@ -487,7 +487,7 @@ table_combined_chronic <- combined_results_chronic %>%
               values_from = c("unadjusted", `IPTW-MSM`)) %>% 
   arrange(desc(outcome), effect) %>% 
   select(outcome, effect, ends_with(c("direct", "indirect")))
-write.csv(table_combined_chronic, "N:/durable/Data_analyses/Libor/Chronic_Loneliness_Health_Adulthood/Results/Tables/table_combined_chronic")
+write.csv(table_combined_chronic, "table_combined_chronic")
 
 
 # antibiotics and analgesics
@@ -535,7 +535,7 @@ plot_combined_acute <- combined_results_acute %>%
         axis.line = element_line(color = "black"))
 
 ggsave(filename = "plot_combined_acute.jpeg",
-       path = "N:/durable/Data_analyses/Libor/Chronic_Loneliness_Health_Adulthood/Results/Graphs", 
+       path = "Results/Graphs", 
        width = 10, 
        height = 5,  
        bg="white",
@@ -573,7 +573,7 @@ plot_combined_acute_prescr_nr <- combined_results_acute %>%
         axis.line = element_line(color = "black"))
 
 ggsave(filename = "plot_combined_acute_prescr_nr.jpeg",
-       path = "N:/durable/Data_analyses/Libor/Chronic_Loneliness_Health_Adulthood/Results/Graphs", 
+       path = "Results/Graphs", 
        width = 10, 
        height = 5,  
        bg="white",
@@ -609,7 +609,7 @@ plot_combined_acute_timespec <- combined_results_acute %>%
         axis.line = element_line(color = "black"))
 
 ggsave(filename = "plot_combined_acute_timespec.jpeg",
-       path = "N:/durable/Data_analyses/Libor/Chronic_Loneliness_Health_Adulthood/Results/Graphs", 
+       path = "Results/Graphs", 
        width = 13.8, 
        height = 8,  
        bg="white",
@@ -629,6 +629,6 @@ table_combined_acute <- combined_results_acute %>%
               values_from = c("unadjusted", `IPTW-MSM`)) %>% 
   arrange(desc(outcome), effect) %>% 
   select(outcome, effect, ends_with(c("direct", "indirect")))
-write.csv(table_combined_acute, "N:/durable/Data_analyses/Libor/Chronic_Loneliness_Health_Adulthood/Results/Tables/table_combined_acute")
+write.csv(table_combined_acute, "table_combined_acute")
 
 
